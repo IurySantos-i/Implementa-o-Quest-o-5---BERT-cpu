@@ -1,0 +1,14 @@
+{
+  "aprovado": true,
+  "verificado_em": "2026-10-22T19:06:42.494821-03:00",
+  "pacote_atual": "pesquisa",
+  "resultados_preservados": 334,
+  "figuras_preservadas": 14,
+  "execucoes": 156,
+  "configuracoes": 52,
+  "modelos_identicos": true,
+  "logica_instrumento_identica": true,
+  "manifesto_migracao_sha256": "d16ecdda4e35289034f0930147d8d6f580d8b176ea73c56ecd2fffc827f9a1f8",
+  "alteracoes_documentadas": 11,
+  "novos_treinamentos": 0
+}

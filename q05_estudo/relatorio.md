@@ -1,0 +1,333 @@
+# Q5 — A operação estrela compensa seu custo em Adult?
+
+Estudo experimental • 13 de outubro de 2026
+
+## 1. A pergunta
+
+A Q5 pergunta se uma camada estrela, formada pelo produto elemento a elemento de dois ramos afins, oferece mais acurácia por FLOP que uma camada densa ReLU mais larga, e se a resposta muda com a largura. Investigamos a classificação de renda no Adult com o motor NumPy/CPU do BERT-CPU, pareando estrela de largura h e denso de largura 2h. Mantemos épocas, otimizador, taxa e sementes. ‘FLOPs iguais’ é uma aproximação, pois a rede inteira inclui a saída; publicamos os custos efetivos, um controle de teto de inferência e a comparação soma versus produto com os mesmos dois ramos.
+
+## 2. O que a literatura diz
+
+**Ma et al. [1] — Rewrite the Stars.** A multiplicação de projeções cria interações entre atributos sem construir explicitamente a expansão de monômios. Em redes de visão, o artigo observa ganhos ao substituir soma por produto e sugere maior utilidade em redes estreitas. A previsão transferida para Adult é uma vantagem da estrela nas larguras pequenas. Essa previsão é uma inferência: o trabalho usa blocos de visão, convoluções e outra escala; não mede esta MLP tabular. O controle Soma aproxima a ablação do artigo, enquanto Denso 2h responde à pergunta específica do notebook.
+
+**Shazeer [2] — GLU Variants Improve Transformer.** ReGLU tem a mesma forma algébrica da nossa estrela-ReLU; GEGLU e SwiGLU trocam a ativação de um ramo. O trabalho observa melhor perplexidade para algumas variantes no T5 e ajusta larguras para manter aproximadamente custo e parâmetros. Isso motiva nossa extensão com GLU, GEGLU e SwiGLU, mas não estabelece uma ordem universal de acurácia em Adult. Estrela e ReGLU não são contadas como arquiteturas diferentes.
+
+**Dauphin et al. [3] — Gated Convolutional Networks.** A GLU combina um ramo linear com uma porta sigmoide. O caminho linear dispensa uma derivada adicional de ativação naquele ramo, favorecendo a propagação de gradientes nos modelos estudados. A extrapolação verificável é que a porta afete convergência e estabilidade. A vantagem de paralelização em linguagem não é uma previsão de velocidade para nossas MLPs em CPU.
+
+**Grinsztajn et al. [4] — Modelos tabulares.** Em 45 bases, o estudo analisa orientação dos atributos, atributos pouco informativos e irregularidade das funções como fatores relevantes para a vantagem de árvores. Produtos entre features podem ajudar algumas interações, mas não eliminam esses fatores. Em indicadores one-hot, quadrados repetem o próprio indicador e produtos entre categorias exclusivas são zero. As ablações por tipo de atributo testam compatibilidade com a explicação por interações; não identificam sua causa nem comparam a estrela com árvores, que não foram treinadas aqui.
+
+As quatro fontes primárias, suas previsões e os limites de extrapolação estão detalhados em `literatura.md`; as referências completas aparecem ao final. A pergunta permanece empírica: capacidade representacional adicional não garante melhor generalização no mesmo protocolo de otimização.
+
+Há ainda uma particularidade matemática deste domínio: para indicadores binários, \(\operatorname{ReLU}(x_i+x_j-1)=x_i x_j\). Assim, uma unidade ReLU comum já representa a coocorrência de dois indicadores. A derivada mista nula dentro de regiões contínuas não impede representar essa interação no domínio discreto. O produto explícito não garante uma vantagem exclusiva nas categorias.
+
+## 3. Hipótese
+
+**H1, registrada antes dos experimentos:** em h=32 e h=64, estrela-ReLU supera denso-2h por pelo menos 0,3 ponto percentual na acurácia média de teste, com separação dos intervalos média ± desvio-padrão amostral. A condição é conjuntiva: precisa ocorrer nas duas larguras. O limiar é uma escolha operacional deste estudo, não uma previsão numérica dos artigos.
+
+**H2, secundária:** a vantagem estrela−denso é maior usando somente indicadores categóricos que usando somente atributos contínuos. Para examinar essa direção, calculamos também a diferença das diferenças por semente. Um contraste positivo é compatível com a hipótese; três sementes e mudanças na informação disponível impedem uma conclusão causal.
+
+O texto em `protocolo.md` foi escrito antes do primeiro treino. Seu SHA-256 começa por `c152ebabe9f4dda9`; o valor integral e os hashes do código e dos dados estão em `resultados/ambiente.json`. Esse registro local torna alterações detectáveis dentro da entrega, mas não equivale a um pré-registro externo independente.
+
+## 4. O que foi implementado
+
+`modelos.py` implementa seis famílias com operações já diferenciadas pelo motor: denso, estrela/ReGLU, soma, GLU, GEGLU e SwiGLU. O denso no teto reutiliza a família densa com largura calculada. Os ramos usam Xavier, vieses zero e a mesma saída. `executar.py` direciona ao executor sequencial protegido, que chama `run_adult` sem alterar o instrumento. O hook coleta grafos a cada época, sem mudar operações numéricas; a referência e suas curvas foram novamente verificadas. Os primeiros 51 treinos pertencem à execução histórica; os demais usam os controles descritos em `adendo_recursos.md`.
+
+As portas são ReLU(u), sigmoide(u), GELU(u) e u·sigmoide(u). GELU usa a aproximação por tanh do motor; SwiGLU fixa β=1. Na soma, combinamos ReLU(u)+v; nas portas, g(u)·v. Com entrada de dimensão d e lote B, os ramos têm pesos (d+1)×h e ativações h×B; a saída tem pesos (h+1)×2. A seleção preserva a ordem do carregador: seis contínuos, depois 102 indicadores.
+
+\[
+u=W_1^\top\widetilde X,\quad v=W_2^\top\widetilde X,\quad A_{\star}=\operatorname{ReLU}(u)\odot v.
+\]
+
+X̃ acrescenta uma linha de uns sobre X; cada exemplo é uma coluna e o viés ocupa a primeira linha dos pesos. A saída produz dois logits, usados com softmax e entropia cruzada categórica. As derivadas locais da estrela são:
+
+\[
+\frac{\partial J}{\partial u}=\frac{\partial J}{\partial A}\odot v\odot\mathbf{1}_{u>0},\qquad \frac{\partial J}{\partial v}=\frac{\partial J}{\partial A}\odot\operatorname{ReLU}(u).
+\]
+
+\[
+\frac{\partial J}{\partial W_1}=\widetilde X\left(\frac{\partial J}{\partial u}\right)^\top,\qquad \frac{\partial J}{\partial W_2}=\widetilde X\left(\frac{\partial J}{\partial v}\right)^\top.
+\]
+
+Na região u>0, um neurônio estrela produz (aᵀx̃)(bᵀx̃), incluindo termos cruzados. Com ReLU, o resultado é quadrático por partes. Os coeficientes não são todos independentes: a matriz quadrática simétrica (abᵀ+baᵀ)/2 tem posto no máximo dois por unidade. Uma MLP ReLU comum também produz dependências entre atributos, mas seus logits são afins dentro de cada região de ativação.
+
+**Verificação:** 7 testes aprovados; 333 coordenadas de entradas, pesos e vieses comparadas com diferenças centrais de passo 10⁻⁶. Erro absoluto máximo: 1.4831e-10. O oráculo de forward é NumPy independente, com pontos afastados da fronteira da ReLU. Também verificamos gradientes nulos nos atributos excluídos, equivalência do denso com a referência e fórmulas de custo. Não foi criado um novo operador primitivo de autograd.
+
+Os arquivos de análise, auditoria e geração do relatório completam a implementação. A tabela de linhas de código na seção 9 explicita o tamanho da entrega. Resultados individuais, pesos finais e curvas de 100 épocas acompanham todas as configurações, permitindo inspecionar cada número das tabelas.
+
+## 5. Protocolo
+
+**Tabela 1 — Condições fixadas**
+
+| Item | Valor |
+| --- | --- |
+| Treino / validação / teste | 26.049 / 6.512 / 16.281 |
+| Entradas completas | 6 contínuas + 102 indicadores |
+| Larguras h | 16, 32, 64, 128 |
+| Sementes | 0, 1, 2 |
+| Épocas / lote | 100 / treino inteiro |
+| Otimizador / taxa | Adam / 0,01 |
+| Betas / epsilon | 0,9; 0,999 / 10⁻⁸ |
+| Precisão / decaimento | float64 / zero |
+| Grade / verificações adicionais | 156 + referência + equivalência |
+
+O treino oficial tem 32.561 exemplos. A mesma permutação por semente separa 20% para validação antes da inicialização das arquiteturas. Não houve ajuste da taxa, escolha de checkpoint, early stopping ou seleção de largura pelo teste. Avaliamos todos os modelos após a época 100. A semente compartilhada pareia as divisões, mas não gera pesos idênticos em arquiteturas de formas diferentes. O DP reflete simultaneamente mudança de divisão e inicialização.
+
+No bloco completo, a grade contém sete configurações por largura: as seis famílias e o denso no teto. Nos blocos contínuo e categórico, contém estrela, denso-2h e denso no teto. São 84 treinos completos e 72 de ablação. A hipótese principal usa o pareamento h:2h; o controle soma mantém exatamente parâmetros e custo contado; as demais comparações são extensões declaradas, publicadas integralmente.
+
+\[
+C_{\rm denso}(m)=(2d+7)m+4,\qquad C_{\star}(h)=C_{\rm soma}(h)=(4d+10)h+4.
+\]
+
+Essas fórmulas dão o custo de inferência por exemplo conforme o motor, incluindo as duas classes, vieses, ReLU e combinação. Multiplicamos por 16.281 para obter o custo de uma passagem no teste. Em d=108, estrela custa 442h+4 e denso-2h custa 446h+4: cerca de 0,90% de diferença. Com seis contínuos, são 34h+4 e 38h+4, diferença próxima de 10,5%. Assim, o controle de teto é particularmente relevante nessa ablação.
+
+\[
+m_{\rm teto}=\left\lfloor\frac{(4d+10)h}{2d+7}\right\rfloor.
+\]
+
+O controle escolhe a maior largura densa inteira que cabe no custo da estrela. Trata-se do mesmo teto de inferência, com custo usado ligeiramente diferente por arredondamento; não de igualdade artificial obtida adicionando operações inúteis. Para treino T e validação V, os custos por época são:
+
+\[
+F_d=[(4d+17)m+26]T+[(2d+7)m+18]V+4,
+\]
+
+\[
+F_\star=[(8d+22)h+26]T+[(4d+10)h+18]V+4.
+\]
+
+O contador inclui forward, backward dos produtos matriciais e forward/perda de validação; omite a aritmética NumPy do Adam e o backward elementar. Reportamos essa convenção, não o total físico exato. O orçamento fixado é de épocas; treino e inferência não são intercambiáveis. As variantes GLU também pagam o custo contado de suas ativações.
+
+Reportamos média ± DP amostral (ddof=1). Para a diferença de acurácia, subtraímos resultados com a mesma semente e calculamos IC t de 95%, com 2 graus de liberdade. Esse IC é descritivo, depende de aproximação de normalidade e não corrige múltiplas comparações. A decisão de H1 segue sua regra registrada. A classificação adicional ‘vantagem clara’ exige separação das barras e IC que exclua zero; sobreposição não prova equivalência. Usamos `summarize()` sem seu diagnóstico automático e `pareto()` com fronteira das médias explicitamente descritiva.
+
+## 6. Resultados
+
+**Referência reproduzida.** O denso 64 com semente 0 atingiu 85,4309% no teste, 84,2277822 GFLOPs de treino e 232,427556 MFLOPs de inferência. O denso 64 da grade (h=32) reproduziu exatamente essa acurácia e esses custos. Sua média nas três sementes é 85,472 ± 0,158%. A auditoria reconstruiu três inferências a partir dos pesos publicados e conferiu custos, parâmetros, curvas e arquivos das 156 execuções.
+
+**Resposta à pergunta principal.** A hipótese H1 não foi atendida pela regra registrada. A diferença média estrela−denso-2h varia de -0,934 a 0,029 p.p. nas quatro larguras (Tabela 3). A conclusão é condicionada ao protocolo de 100 épocas e Adam com taxa fixa; não estima o melhor desempenho possível de cada arquitetura.
+
+Em h=16, a pequena diferença positiva não se distingue do ruído. Em h=32, a média favorece o denso, mas o IC pareado ainda inclui zero. Em h=64 e h=128, o denso é favorecido pelos dois critérios declarados. Portanto, o resultado depende da largura: ampliar a estrela não recupera uma vantagem; sua diferença relativa piora nesta grade (Tabela 3).
+
+**Tabela 2 — Dados completos; teste: média ± DP; treino: média**
+
+| h | Modelo (larg.) | Treino (%) | Teste (%) | Treino GF | Infer. MF | Parâm. |
+| --- | --- | --- | --- | --- | --- | --- |
+| 16 | Denso 2h (32) | 86,770 | 85,462 ± 0,132 | 42,15 | 116,25 | 3554 |
+| 16 | Estrela (16) | 86,872 | 85,490 ± 0,124 | 41,61 | 115,20 | 3522 |
+| 16 | Soma (16) | 86,072 | 85,570 ± 0,092 | 41,61 | 115,20 | 3522 |
+| 32 | Denso 2h (64) | 86,899 | 85,472 ± 0,158 | 84,23 | 232,43 | 7106 |
+| 32 | Estrela (32) | 87,590 | 85,095 ± 0,199 | 83,14 | 230,34 | 7042 |
+| 32 | Soma (32) | 86,495 | 85,687 ± 0,088 | 83,14 | 230,34 | 7042 |
+| 64 | Denso 2h (128) | 87,500 | 85,374 ± 0,079 | 168,38 | 464,79 | 14210 |
+| 64 | Estrela (64) | 88,346 | 84,808 ± 0,302 | 166,21 | 460,62 | 14082 |
+| 64 | Soma (64) | 86,588 | 85,627 ± 0,083 | 166,21 | 460,62 | 14082 |
+| 128 | Denso 2h (256) | 87,829 | 85,204 ± 0,103 | 336,67 | 929,51 | 28418 |
+| 128 | Estrela (128) | 89,173 | 84,270 ± 0,089 | 332,34 | 921,18 | 28162 |
+| 128 | Soma (128) | 86,625 | 85,715 ± 0,038 | 332,34 | 921,18 | 28162 |
+
+Ao ampliar a estrela de 16 para 128, a acurácia média de treino sobe de 86,872% para 89,173%, enquanto a de teste cai (Tabela 2). Esse padrão é compatível com sobreajuste; não distingue sozinho capacidade excessiva, escala das ativações e configuração de otimização.
+
+![Figura 1 — Pareto dos modelos principais. Barras: DP; diamantes: fronteira das médias, sem teste de dominância.](figuras/pareto_inferencia.png)
+
+Figura 1 — Pareto dos modelos principais. Barras: DP; diamantes: fronteira das médias, sem teste de dominância.
+
+A Tabela 7 reproduz `summarize()` para as 52 configurações. Em `resultados/`, os arquivos `resumo.csv` e `execucoes.csv` detalham médias e execuções individuais. A figura correspondente de treino está em `figuras/pareto_treino.pdf`.
+
+### Diferenças pareadas, largura e orçamento
+
+**Tabela 3 — Estrela menos denso-2h; pontos percentuais**
+
+| h | Média Δ | DP Δ | IC t 95% | Barras sobrepostas |
+| --- | --- | --- | --- | --- |
+| 16 | 0,029 | 0,182 | [-0,424; 0,481] | sim |
+| 32 | -0,377 | 0,212 | [-0,903; 0,149] | não |
+| 64 | -0,565 | 0,224 | [-1,121; -0,009] | não |
+| 128 | -0,934 | 0,191 | [-1,407; -0,460] | não |
+
+**Dependência da largura.** O contraste pareado (estrela−denso) em h=128 menos o mesmo contraste em h=16 vale -0,962 p.p., com IC t de 95% [-1,822; -0,103] (linhas extremas da Tabela 3; valores por semente em `analise.json`). Ele sugere piora relativa ao aumentar a largura. Essa análise é exploratória, acrescentada após observar a grade principal, sem alterar H1; mantém as limitações de três sementes e comparações múltiplas.
+
+No bloco completo, a estrela usa aproximadamente 99,10% dos FLOPs de inferência e 98,71% dos FLOPs de treino do denso-2h nas quatro larguras; as pequenas variações decorrem dos termos constantes das fórmulas da seção 5. A Tabela 3 quantifica a incerteza da diferença de acurácia; a Tabela 4 verifica a sensibilidade ao teto de custo e à combinação dos ramos.
+
+**Tabela 4 — Controles no bloco completo**
+
+| h | Larg. | Teste teto (%) | Treino GF | Infer. MF | Δ teto | Δ soma |
+| --- | --- | --- | --- | --- | --- | --- |
+| 16 | 31 | 85,517 ± 0,059 | 40,84 | 112,62 | -0,027 | -0,080 |
+| 32 | 63 | 85,480 ± 0,235 | 82,91 | 228,80 | -0,385 | -0,592 |
+| 64 | 126 | 85,326 ± 0,111 | 165,75 | 457,53 | -0,518 | -0,819 |
+| 128 | 253 | 85,335 ± 0,031 | 332,73 | 918,62 | -1,065 | -1,445 |
+
+Δ teto e Δ soma significam estrela menos o respectivo controle. A comparação com soma isola a operação de combinação dentro do desenho adotado, mas também muda escala e condicionamento das ativações. Todas as diferenças individuais, seus DPs e ICs estão em `comparacoes.csv`. O arredondamento da largura no teto não permite alegar igualdade exata de custo usado.
+
+O denso no teto também é favorecido em h=64 e h=128 pelos dois critérios; h=16 e h=32 permanecem inconclusivos pela regra conjunta (Tabela 4 e `comparacoes.csv`). Assim, a leitura principal nas larguras maiores persiste ao restringir a inferência densa ao teto da estrela.
+
+**Produto versus soma.** Com os mesmos parâmetros e FLOPs contados, a soma é favorecida pelos critérios registrados em h=32, 64, 128; o contraste é inconclusivo em h=16 (Tabela 4 e ICs em `comparacoes.csv`). A previsão de vantagem multiplicativa transferida de Ma et al. não foi corroborada nestes pares. Isso delimita a transferência para esta MLP tabular; não refuta os resultados do artigo em visão.
+
+![Figura 2 — Curvas em h=64. Treino é medido antes da atualização; validação, depois. Faixas: média ± DP.](figuras/curvas.png)
+
+Figura 2 — Curvas em h=64. Treino é medido antes da atualização; validação, depois. Faixas: média ± DP.
+
+As curvas ajudam a distinguir ajuste ao treino de desempenho fora dele. Como a taxa não foi ajustada por família, uma diferença de convergência pode refletir otimização e escala das ativações. A curva de validação não foi usada para escolher a época final; todos os resultados publicados são da época 100.
+
+### Portas e ablações dos atributos
+
+**Tabela 5 — Portas adicionais; teste (%) ± DP**
+
+| h | Família | Teste (%) | Treino GF | Infer. MF |
+| --- | --- | --- | --- | --- |
+| 16 | GLU | 85,738 ± 0,027 | 41,82 | 116,25 |
+| 16 | GEGLU | 85,378 ± 0,080 | 41,98 | 117,03 |
+| 16 | SwiGLU | 85,447 ± 0,048 | 41,87 | 116,51 |
+| 32 | GLU | 85,738 ± 0,087 | 83,56 | 232,43 |
+| 32 | GEGLU | 85,181 ± 0,068 | 83,87 | 233,99 |
+| 32 | SwiGLU | 85,283 ± 0,075 | 83,67 | 232,95 |
+| 64 | GLU | 85,609 ± 0,055 | 167,04 | 464,79 |
+| 64 | GEGLU | 84,970 ± 0,128 | 167,67 | 467,92 |
+| 64 | SwiGLU | 85,116 ± 0,051 | 167,25 | 465,83 |
+| 128 | GLU | 85,468 ± 0,006 | 334,01 | 929,51 |
+| 128 | GEGLU | 84,602 ± 0,144 | 335,26 | 935,77 |
+| 128 | SwiGLU | 84,837 ± 0,154 | 334,42 | 931,60 |
+
+A maior média descritiva do bloco completo ocorre em GLU em h=16, GLU em h=32, com dispersões e custos publicados na Tabela 5. Essa identificação é pós-experimento; não é seleção validada nem prova de superioridade sobre todas as configurações. A ordenação observada não sustenta transferir diretamente para Adult a expectativa de GEGLU/SwiGLU como melhores portas em linguagem. Os dados completos estão em `resumo.csv` e a visualização em `figuras/variantes.pdf`.
+
+![Figura 3 — Mesmas sementes e épocas; informação disponível muda entre blocos. Barras: DP.](figuras/ablacoes.png)
+
+Figura 3 — Mesmas sementes e épocas; informação disponível muda entre blocos. Barras: DP.
+
+**Tabela 6 — Hipótese mecanística; pontos percentuais**
+
+| h | Δ categ. | Δ contín. | Δ categ. − Δ contín. | IC t 95% |
+| --- | --- | --- | --- | --- |
+| 16 | -0,027 | 0,104 | -0,131 | [-0,338; 0,076] |
+| 32 | -0,170 | -0,066 | -0,104 | [-0,532; 0,324] |
+| 64 | -0,475 | -0,109 | -0,366 | [-0,603; -0,130] |
+| 128 | -0,690 | -0,092 | -0,598 | [-1,270; 0,075] |
+
+**H2 não foi corroborada.** As quatro estimativas da diferença das diferenças são negativas, direção oposta à prevista. Em h=64, o IC também fica inteiramente abaixo de zero; nas demais larguras, inclui zero (Tabela 6). Portanto, não há evidência, neste protocolo, de que a vantagem da estrela se concentre nos indicadores categóricos. Os sinais pontuais nas outras larguras não bastam para afirmar o mecanismo inverso.
+
+Cada Δ é estrela−denso-2h. A última diferença é calculada dentro de cada semente antes de obter média e IC. Os contrastes contra o denso no teto também são publicados em `hipotese_mecanistica.csv`. Um sinal favorável a H2 não demonstra que a rede aprendeu interações entre categorias: os blocos diferem em dimensão, informação preditiva e custo. Eliminar o bloco contínuo também elimina interações mistas contínuo×categoria.
+
+### Tabela completa do instrumento de medição
+
+**Tabela 7 — Saída de summarize(), com cabeçalho traduzido.** Acurácia na escala 0–1; dispersão: DP amostral. GFLOP: treino de 100 épocas; MFLOP: uma inferência no teste inteiro. Cada linha agrega três sementes. A referência é `completo_denso_h32` (largura efetiva 64); o sufixo h nas demais linhas é a largura de referência do pareamento. A tabela inclui os custos de todas as ablações da Figura 3. Segundos por execução misturam sessões históricas concorrentes e sessões sequenciais, portanto não comparam latência entre modelos.
+
+```text
+configuração                  n     acurácia ± DP  treino GFLOP  infer. MFLOP  parâmetros   s/exec
+-------------------------------------------------------------------------------------------------
+completo_denso_h16            3    0.8546 ± 0.0013         42.15         116.2      3,554     15.5
+completo_estrela_h16          3    0.8549 ± 0.0012         41.61         115.2      3,522     15.6
+completo_soma_h16             3    0.8557 ± 0.0009         41.61         115.2      3,522     15.2
+completo_glu_h16              3    0.8574 ± 0.0003         41.82         116.2      3,522     16.6
+completo_geglu_h16            3    0.8538 ± 0.0008         41.98         117.0      3,522     16.7
+completo_swiglu_h16           3    0.8545 ± 0.0005         41.87         116.5      3,522     17.4
+completo_denso_teto_h16       3    0.8552 ± 0.0006         40.84         112.6      3,443     13.5
+completo_denso_h32            3    0.8547 ± 0.0016         84.23         232.4      7,106     32.8
+completo_estrela_h32          3    0.8510 ± 0.0020         83.14         230.3      7,042     28.1
+completo_soma_h32             3    0.8569 ± 0.0009         83.14         230.3      7,042     28.0
+completo_glu_h32              3    0.8574 ± 0.0009         83.56         232.4      7,042     39.0
+completo_geglu_h32            3    0.8518 ± 0.0007         83.87         234.0      7,042     32.6
+completo_swiglu_h32           3    0.8528 ± 0.0007         83.67         232.9      7,042     45.8
+completo_denso_teto_h32       3    0.8548 ± 0.0023         82.91         228.8      6,995     27.2
+completo_denso_h64            3    0.8537 ± 0.0008        168.38         464.8     14,210     79.9
+completo_estrela_h64          3    0.8481 ± 0.0030        166.21         460.6     14,082     72.6
+completo_soma_h64             3    0.8563 ± 0.0008        166.21         460.6     14,082     74.6
+completo_glu_h64              3    0.8561 ± 0.0005        167.04         464.8     14,082     61.9
+completo_geglu_h64            3    0.8497 ± 0.0013        167.67         467.9     14,082     62.3
+completo_swiglu_h64           3    0.8512 ± 0.0005        167.25         465.8     14,082     61.4
+completo_denso_teto_h64       3    0.8533 ± 0.0011        165.75         457.5     13,988     38.6
+completo_denso_h128           3    0.8520 ± 0.0010        336.67         929.5     28,418    165.9
+completo_estrela_h128         3    0.8427 ± 0.0009        332.34         921.2     28,162    119.9
+completo_soma_h128            3    0.8572 ± 0.0004        332.34         921.2     28,162    118.7
+completo_glu_h128             3    0.8547 ± 0.0001        334.01         929.5     28,162    126.6
+completo_geglu_h128           3    0.8460 ± 0.0014        335.26         935.8     28,162    132.6
+completo_swiglu_h128          3    0.8484 ± 0.0015        334.42         931.6     28,162    128.5
+completo_denso_teto_h128      3    0.8533 ± 0.0003        332.73         918.6     28,085     78.4
+continuo_denso_h16            3    0.8211 ± 0.0006          3.89          10.0        290      2.1
+continuo_estrela_h16          3    0.8221 ± 0.0007          3.35           8.9        258      2.0
+continuo_denso_teto_h16       3    0.8214 ± 0.0010          3.42           8.7        254      1.9
+continuo_denso_h32            3    0.8221 ± 0.0010          7.71          19.9        578      3.5
+continuo_estrela_h32          3    0.8214 ± 0.0015          6.62          17.8        514      3.1
+continuo_denso_teto_h32       3    0.8219 ± 0.0010          6.87          17.7        515      3.2
+continuo_denso_h64            3    0.8237 ± 0.0003         15.33          39.7      1,154      6.2
+continuo_estrela_h64          3    0.8227 ± 0.0004         13.17          35.5      1,026      6.3
+continuo_denso_teto_h64       3    0.8239 ± 0.0011         13.67          35.3      1,028      5.7
+continuo_denso_h128           3    0.8241 ± 0.0005         30.59          79.3      2,306     14.5
+continuo_estrela_h128         3    0.8232 ± 0.0006         26.25          70.9      2,050     10.8
+continuo_denso_teto_h128      3    0.8243 ± 0.0007         27.37          70.9      2,063     13.1
+categorico_denso_h16          3    0.8336 ± 0.0010         39.90         110.0      3,362     10.8
+categorico_estrela_h16        3    0.8333 ± 0.0008         39.36         109.0      3,330     10.7
+categorico_denso_teto_h16     3    0.8342 ± 0.0003         38.66         106.6      3,257     10.3
+categorico_denso_h32          3    0.8338 ± 0.0005         79.73         219.9      6,722     26.8
+categorico_estrela_h32        3    0.8321 ± 0.0010         78.64         217.8      6,658     20.6
+categorico_denso_teto_h32     3    0.8329 ± 0.0008         78.48         216.5      6,617     19.1
+categorico_denso_h64          3    0.8319 ± 0.0006        159.37         439.8     13,442     58.2
+categorico_estrela_h64        3    0.8272 ± 0.0010        157.21         435.6     13,314     51.5
+categorico_denso_teto_h64     3    0.8330 ± 0.0012        156.88         432.9     13,232     37.2
+categorico_denso_h128         3    0.8317 ± 0.0006        318.67         879.5     26,882    162.3
+categorico_estrela_h128       3    0.8248 ± 0.0017        314.33         871.2     26,626    112.2
+categorico_denso_teto_h128    3    0.8306 ± 0.0003        314.93         869.2     26,567     72.3
+```
+
+## 7. Ameaças à validade
+
+**Contabilidade incompleta do motor.** Os produtos matriciais dominantes são contados, mas o backward elementar e o Adam não. As ativações recebem custos aproximados; GELU, por exemplo, custa oito operações por elemento no contador. Multiplicação e soma entre ramos têm o mesmo custo registrado, embora seus backwards façam operações diferentes. Igualdade no contador não significa igualdade física exata. FLOPs tampouco medem memória, energia ou latência; os tempos concorrentes não sustentam uma afirmação de aceleração.
+
+**Três sementes e comparações múltiplas.** O tamanho amostral é mínimo e o IC t tem dois graus de liberdade. Os resultados de cada semente compartilham o mesmo teste oficial; o DP não mede toda a incerteza sobre a população. Avaliar muitas configurações aumenta a chance de uma média extrema. Não usamos o teste para adaptar a grade ou a taxa, mas qualquer escolha posterior da melhor variante é exploratória. Barras sobrepostas não estabelecem equivalência, e separar barras não substitui uma análise estatística completa.
+
+**Otimização fixa e escala.** A taxa 0,01 e 100 épocas reproduzem a referência, mas não são necessariamente adequadas a cada porta ou largura. Xavier com ramos multiplicativos muda a distribuição das ativações em relação ao denso. Um resultado desfavorável pode indicar dificuldade de treinamento no protocolo, e não incapacidade da classe de funções. O controle soma também muda condicionamento, portanto não separa expressividade de otimização.
+
+**Pré-processamento e divisão.** O carregador ajusta médias, desvios e vocabulários usando as 32.561 linhas do treino oficial antes da divisão interna. As features da validação influenciam essa transformação; seus rótulos e o teste não. Preservamos esse comportamento para reproduzir a referência e o declaramos como limitação. As sementes mudam simultaneamente inicialização e divisão, impedindo atribuir toda a dispersão a apenas um fator.
+
+**Métrica e domínio.** Acurácia pode ocultar desempenho desigual na classe minoritária. Não demonstramos melhoria em recall, calibração ou equidade. Adult é uma única base, com 108 features, CPU e float64. Não inferimos desempenho em imagens, grandes modelos de linguagem, GPU, outras precisões ou outras bases. As ablações removem informação e não equivalem a intervenções causais sobre interações específicas.
+
+**Pareamento de orçamento.** h:2h aproxima o custo apenas no problema completo; a diferença cresce nos contínuos. O denso no teto corrige a restrição de inferência até o arredondamento inteiro, mas não iguala treino, parâmetros ou duração. As fronteiras são calculadas sobre médias; deslocamentos menores que a variabilidade não estabelecem dominância.
+
+## 8. O que permanece em aberto
+
+O próximo experimento prioritário é ajustar a taxa de aprendizado por família usando somente validação, sob orçamento declarado para a busca, e então repetir em mais sementes. Isso ajudaria a distinguir vantagem arquitetural de uma taxa inadequada. Um desenho com split fixo e várias inicializações, seguido de vários splits, separaria as duas fontes de dispersão.
+
+Para investigar o mecanismo, testar interações controladas em dados sintéticos e perturbar grupos categóricos preservando marginais seria mais informativo que apenas remover blocos. Para generalização, repetir em outras bases tabulares e incluir uma referência de árvores com busca comparável. Para eficiência física, medir inferência isolada, memória e latência com aquecimento e controle de threads; para o uso preditivo, acrescentar métricas por classe e calibração. Nenhuma dessas análises é reivindicada como concluída nesta entrega.
+
+## 9. Reprodução
+
+Todos os números foram produzidos localmente; não há resultados simulados ou copiados dos artigos. A entrega mantém o instrumento original e depende da cópia completa de BERT-CPU, incluindo `datasets/adult`. Execute os comandos abaixo a partir de `pesquisa/`. O executor pula configurações completas e recusa misturar código/dados com hashes diferentes.
+
+```bash
+python q05_estudo/test_modelos.py --json -v
+python q05_estudo/executar.py --processos 1
+python q05_estudo/verificar_resultados.py
+python q05_estudo/analisar.py
+python q05_estudo/gerar_relatorio.py
+```
+
+Para reproduzir apenas a auditoria, tabelas e documentos, omita o comando `executar.py`. Para um novo treino independente, use uma cópia integral do repositório e mova os resultados existentes para backup nessa cópia, conforme o README. O notebook abre como relatório e análise dos arquivos salvos; não inicia automaticamente os 156 treinos.
+
+**Ambiente de origem:** Python 3.14.7, NumPy 2.5.4, CachyOS Linux, Ryzen 5 5600, 16 GB de RAM. Após 51 treinos em três processos, episódios de OOM exigiram retomada sequencial. A coleta de ciclos por época evita acumular grafos; cada filho usa um cgroup próprio, com teto de 3 GiB, swap zero e uma thread BLAS. Pico entre os treinos protegidos: 1,86 GiB; menor MemAvailable monitorado: 6,89 GiB. O backend permaneceu NumPy/CPU float64.
+
+**Duração:** janela observada da grade: 993,37 min, incluindo interrupções e períodos sem execução; serviços protegidos concluídos: 92,26 min de parede acumulados; soma dos treinos concluídos com referência e validação de equivalência: 117,48 min. A referência original levou 29,67 s e sua validação protegida, 28,43 s. Tempo de pesquisa/redação não foi cronometrado; execuções interrompidas não integram essas somas e o total anterior aos OOMs não é recuperável. Não apresentamos essas durações como comparação de latência entre arquiteturas.
+
+O custo acumulado registrado dos treinos concluídos é 19,120 TFLOPs, incluindo referência e validação de equivalência. Trabalho parcial interrompido não foi salvo nem incluído nesse total. As retomadas históricas preservaram, respectivamente, 36, 51, 51 execuções; a retomada protegida preservou 51. Horários por execução, logs e `sessoes_seguras.jsonl` documentam a continuidade.
+
+**Tabela 8 — Principais arquivos (linhas físicas, incluindo comentários)**
+
+| Arquivo | Linhas |
+| --- | --- |
+| modelos.py | 80 |
+| executar_seguro.py | 240 |
+| analisar.py | 291 |
+| test_modelos.py | 263 |
+| verificar_resultados.py | 211 |
+| gerar_relatorio.py | 336 |
+| proveniencia.py | 69 |
+| recursos_documentos.py | 68 |
+| verificar_estrutura.py | 87 |
+
+`resultados/ambiente.json` registra versões, hashes e atributos; `verificacao.json` registra testes e erros de gradiente; `auditoria_final.json` registra verificação de 156 pesos, custos e três inferências recalculadas. Cada JSON individual contém métricas, configuração e curvas; cada NPZ correspondente contém os pesos finais. As tabelas CSV permitem refazer as médias e diferenças sem executar treino. O PDF usa XeLaTeX; Markdown e notebook permanecem acessíveis sem LaTeX.
+
+### Referências
+
+[1] MA, X. et al. Rewrite the Stars. CVPR, 2024. https://arxiv.org/abs/2403.19967
+
+[2] SHAZEER, N. GLU Variants Improve Transformer. 2020. https://arxiv.org/abs/2002.05202
+
+[3] DAUPHIN, Y. N. et al. Language Modeling with Gated Convolutional Networks. ICML, 2017. https://arxiv.org/abs/1612.08083
+
+[4] GRINSZTAJN, L.; OYALLON, E.; VAROQUAUX, G. Why do tree-based models still outperform deep learning on tabular data? NeurIPS, 2022. https://arxiv.org/abs/2207.08815

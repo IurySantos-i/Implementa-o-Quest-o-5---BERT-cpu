@@ -1,0 +1,56 @@
+{
+  "aprovado": true,
+  "testes_executados": 7,
+  "falhas": 0,
+  "erros": 0,
+  "numpy": "2.5.4",
+  "tipo_numerico": "float64",
+  "passo_diferencas_centrais": 1e-06,
+  "tolerancia_absoluta": 2e-08,
+  "tolerancia_relativa": 2e-05,
+  "gradientes": [
+    {
+      "familia": "denso",
+      "coordenadas": 43,
+      "erro_absoluto_maximo": 9.245449631573033e-11
+    },
+    {
+      "familia": "estrela",
+      "coordenadas": 58,
+      "erro_absoluto_maximo": 1.4831182289232192e-10
+    },
+    {
+      "familia": "soma",
+      "coordenadas": 58,
+      "erro_absoluto_maximo": 1.0137208780736096e-10
+    },
+    {
+      "familia": "glu",
+      "coordenadas": 58,
+      "erro_absoluto_maximo": 1.394891771533402e-10
+    },
+    {
+      "familia": "geglu",
+      "coordenadas": 58,
+      "erro_absoluto_maximo": 1.0474247662782543e-10
+    },
+    {
+      "familia": "swiglu",
+      "coordenadas": 58,
+      "erro_absoluto_maximo": 1.019242988620217e-10
+    }
+  ],
+  "coordenadas_verificadas": 333,
+  "erro_absoluto_maximo": 1.4831182289232192e-10,
+  "verificacoes": [
+    "Forward NumPy independente: seis famílias e três blocos",
+    "Todas as entradas, pesos e vieses por diferenças finitas",
+    "Gradientes nulos nas features excluídas",
+    "Inicialização e forward densos idênticos à referência",
+    "FLOPs de inferência: seis famílias e dimensões 6, 102 e 108",
+    "FLOPs de treino com backward e validação: denso, estrela e soma",
+    "Derivada mista: 0,38 na estrela e zero no denso e na soma"
+  ],
+  "duracao_s": 0.1299061640020227,
+  "comando": "python q05_estudo/test_modelos.py --json -v"
+}

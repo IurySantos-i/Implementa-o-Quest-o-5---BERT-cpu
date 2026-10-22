@@ -1,0 +1,8 @@
+# Configurações locais e arquivos temporários
+/.[!.]*/
+!/.github/
+**/__pycache__/
+*.py[cod]
+.env
+.env.*
+/q05_estudo/execucao.lock

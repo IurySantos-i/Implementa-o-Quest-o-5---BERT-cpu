@@ -1,0 +1,23 @@
+{
+  "aprovado": true,
+  "verificado_utc": "2026-10-22T22:06:42.555573+00:00",
+  "paginas_pdf": 9,
+  "secoes": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "configuracoes": 52,
+  "execucoes": 156,
+  "celulas_executadas": 3,
+  "figuras_no_relatorio": 3,
+  "hashes_conferidos": 25,
+  "sha256_manifesto_entrega": "289bb04e828654671ca3f5197f3704e18d57d715a2d58008fc3de40e302ca6a1",
+  "nota": "A conferência visual das páginas e a revisão da interpretação complementam estas verificações."
+}

@@ -1,0 +1,67 @@
+{
+  "aprovado": true,
+  "score": 0.8543087033965973,
+  "train_flops": 84227782200,
+  "infer_flops": 232427556,
+  "seconds": 28.43285608291626,
+  "curvas_equivalentes": true,
+  "memoria_epocas": [
+    {
+      "epoca": 1,
+      "bytes": 311472128,
+      "objetos_coletados": 156
+    },
+    {
+      "epoca": 10,
+      "bytes": 476327936,
+      "objetos_coletados": 304
+    },
+    {
+      "epoca": 20,
+      "bytes": 476573696,
+      "objetos_coletados": 304
+    },
+    {
+      "epoca": 30,
+      "bytes": 476766208,
+      "objetos_coletados": 304
+    },
+    {
+      "epoca": 40,
+      "bytes": 477007872,
+      "objetos_coletados": 304
+    },
+    {
+      "epoca": 50,
+      "bytes": 477069312,
+      "objetos_coletados": 304
+    },
+    {
+      "epoca": 60,
+      "bytes": 477327360,
+      "objetos_coletados": 304
+    },
+    {
+      "epoca": 70,
+      "bytes": 477159424,
+      "objetos_coletados": 304
+    },
+    {
+      "epoca": 80,
+      "bytes": 477417472,
+      "objetos_coletados": 304
+    },
+    {
+      "epoca": 90,
+      "bytes": 477417472,
+      "objetos_coletados": 304
+    },
+    {
+      "epoca": 100,
+      "bytes": 477413376,
+      "objetos_coletados": 304
+    }
+  ],
+  "pico_bytes": 597213184,
+  "concluido_utc": "2026-10-13T14:01:42.517971+00:00"
+}

@@ -1,0 +1,14 @@
+{
+  "versao": "seguro",
+  "processos": 1,
+  "threads": 1,
+  "memory_max_bytes": 3221225472,
+  "swap_max_bytes": 0,
+  "inicio_utc": "2026-10-13T14:01:13.142764+00:00",
+  "hashes": {
+    "executar_seguro.py": "c46b87c6c16b19a3a675bf0f890f7f634ae630983f3aaaf61f7394499f0aa518",
+    "executar.py": "1f62b6c591e97c31b10f38ca1c9fb538ec2f76927169aa72be7588e988fbe8aa",
+    "adendo_recursos.md": "54c8174b649545c3339ef54ed8e1bec0e3c7e75861469e1d68bffdd1468fb760",
+    "modelos.py": "0419a408711b84a4526984ddc5641e0d752bc174dfd6a324952e9303d7f37068"
+  }
+}

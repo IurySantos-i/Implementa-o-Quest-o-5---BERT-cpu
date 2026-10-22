@@ -1,0 +1,1406 @@
+[
+  {
+    "bloco": "completo",
+    "familia": "denso",
+    "h": 16,
+    "largura": 32,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "denso",
+    "h": 16,
+    "largura": 32,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "denso",
+    "h": 16,
+    "largura": 32,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "estrela",
+    "h": 16,
+    "largura": 16,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "estrela",
+    "h": 16,
+    "largura": 16,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "estrela",
+    "h": 16,
+    "largura": 16,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "soma",
+    "h": 16,
+    "largura": 16,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "soma",
+    "h": 16,
+    "largura": 16,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "soma",
+    "h": 16,
+    "largura": 16,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "glu",
+    "h": 16,
+    "largura": 16,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "glu",
+    "h": 16,
+    "largura": 16,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "glu",
+    "h": 16,
+    "largura": 16,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "geglu",
+    "h": 16,
+    "largura": 16,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "geglu",
+    "h": 16,
+    "largura": 16,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "geglu",
+    "h": 16,
+    "largura": 16,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "swiglu",
+    "h": 16,
+    "largura": 16,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "swiglu",
+    "h": 16,
+    "largura": 16,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "swiglu",
+    "h": 16,
+    "largura": 16,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "denso_teto",
+    "h": 16,
+    "largura": 31,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "denso_teto",
+    "h": 16,
+    "largura": 31,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "denso_teto",
+    "h": 16,
+    "largura": 31,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "denso",
+    "h": 32,
+    "largura": 64,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "denso",
+    "h": 32,
+    "largura": 64,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "denso",
+    "h": 32,
+    "largura": 64,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "estrela",
+    "h": 32,
+    "largura": 32,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "estrela",
+    "h": 32,
+    "largura": 32,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "estrela",
+    "h": 32,
+    "largura": 32,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "soma",
+    "h": 32,
+    "largura": 32,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "soma",
+    "h": 32,
+    "largura": 32,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "soma",
+    "h": 32,
+    "largura": 32,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "glu",
+    "h": 32,
+    "largura": 32,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "glu",
+    "h": 32,
+    "largura": 32,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "glu",
+    "h": 32,
+    "largura": 32,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "geglu",
+    "h": 32,
+    "largura": 32,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "geglu",
+    "h": 32,
+    "largura": 32,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "geglu",
+    "h": 32,
+    "largura": 32,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "swiglu",
+    "h": 32,
+    "largura": 32,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "swiglu",
+    "h": 32,
+    "largura": 32,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "swiglu",
+    "h": 32,
+    "largura": 32,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "denso_teto",
+    "h": 32,
+    "largura": 63,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "denso_teto",
+    "h": 32,
+    "largura": 63,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "denso_teto",
+    "h": 32,
+    "largura": 63,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "denso",
+    "h": 64,
+    "largura": 128,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "denso",
+    "h": 64,
+    "largura": 128,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "denso",
+    "h": 64,
+    "largura": 128,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "estrela",
+    "h": 64,
+    "largura": 64,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "estrela",
+    "h": 64,
+    "largura": 64,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "estrela",
+    "h": 64,
+    "largura": 64,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "soma",
+    "h": 64,
+    "largura": 64,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "soma",
+    "h": 64,
+    "largura": 64,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "soma",
+    "h": 64,
+    "largura": 64,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "glu",
+    "h": 64,
+    "largura": 64,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "glu",
+    "h": 64,
+    "largura": 64,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "glu",
+    "h": 64,
+    "largura": 64,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "geglu",
+    "h": 64,
+    "largura": 64,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "geglu",
+    "h": 64,
+    "largura": 64,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "geglu",
+    "h": 64,
+    "largura": 64,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "swiglu",
+    "h": 64,
+    "largura": 64,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "swiglu",
+    "h": 64,
+    "largura": 64,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "swiglu",
+    "h": 64,
+    "largura": 64,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "denso_teto",
+    "h": 64,
+    "largura": 126,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "denso_teto",
+    "h": 64,
+    "largura": 126,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "denso_teto",
+    "h": 64,
+    "largura": 126,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "denso",
+    "h": 128,
+    "largura": 256,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "denso",
+    "h": 128,
+    "largura": 256,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "denso",
+    "h": 128,
+    "largura": 256,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "estrela",
+    "h": 128,
+    "largura": 128,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "estrela",
+    "h": 128,
+    "largura": 128,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "estrela",
+    "h": 128,
+    "largura": 128,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "soma",
+    "h": 128,
+    "largura": 128,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "soma",
+    "h": 128,
+    "largura": 128,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "soma",
+    "h": 128,
+    "largura": 128,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "glu",
+    "h": 128,
+    "largura": 128,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "glu",
+    "h": 128,
+    "largura": 128,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "glu",
+    "h": 128,
+    "largura": 128,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "geglu",
+    "h": 128,
+    "largura": 128,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "geglu",
+    "h": 128,
+    "largura": 128,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "geglu",
+    "h": 128,
+    "largura": 128,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "swiglu",
+    "h": 128,
+    "largura": 128,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "swiglu",
+    "h": 128,
+    "largura": 128,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "swiglu",
+    "h": 128,
+    "largura": 128,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "denso_teto",
+    "h": 128,
+    "largura": 253,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "denso_teto",
+    "h": 128,
+    "largura": 253,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "completo",
+    "familia": "denso_teto",
+    "h": 128,
+    "largura": 253,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "denso",
+    "h": 16,
+    "largura": 32,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "denso",
+    "h": 16,
+    "largura": 32,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "denso",
+    "h": 16,
+    "largura": 32,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "estrela",
+    "h": 16,
+    "largura": 16,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "estrela",
+    "h": 16,
+    "largura": 16,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "estrela",
+    "h": 16,
+    "largura": 16,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "denso_teto",
+    "h": 16,
+    "largura": 28,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "denso_teto",
+    "h": 16,
+    "largura": 28,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "denso_teto",
+    "h": 16,
+    "largura": 28,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "denso",
+    "h": 32,
+    "largura": 64,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "denso",
+    "h": 32,
+    "largura": 64,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "denso",
+    "h": 32,
+    "largura": 64,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "estrela",
+    "h": 32,
+    "largura": 32,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "estrela",
+    "h": 32,
+    "largura": 32,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "estrela",
+    "h": 32,
+    "largura": 32,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "denso_teto",
+    "h": 32,
+    "largura": 57,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "denso_teto",
+    "h": 32,
+    "largura": 57,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "denso_teto",
+    "h": 32,
+    "largura": 57,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "denso",
+    "h": 64,
+    "largura": 128,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "denso",
+    "h": 64,
+    "largura": 128,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "denso",
+    "h": 64,
+    "largura": 128,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "estrela",
+    "h": 64,
+    "largura": 64,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "estrela",
+    "h": 64,
+    "largura": 64,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "estrela",
+    "h": 64,
+    "largura": 64,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "denso_teto",
+    "h": 64,
+    "largura": 114,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "denso_teto",
+    "h": 64,
+    "largura": 114,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "denso_teto",
+    "h": 64,
+    "largura": 114,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "denso",
+    "h": 128,
+    "largura": 256,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "denso",
+    "h": 128,
+    "largura": 256,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "denso",
+    "h": 128,
+    "largura": 256,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "estrela",
+    "h": 128,
+    "largura": 128,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "estrela",
+    "h": 128,
+    "largura": 128,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "estrela",
+    "h": 128,
+    "largura": 128,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "denso_teto",
+    "h": 128,
+    "largura": 229,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "denso_teto",
+    "h": 128,
+    "largura": 229,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "continuo",
+    "familia": "denso_teto",
+    "h": 128,
+    "largura": 229,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "denso",
+    "h": 16,
+    "largura": 32,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "denso",
+    "h": 16,
+    "largura": 32,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "denso",
+    "h": 16,
+    "largura": 32,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "estrela",
+    "h": 16,
+    "largura": 16,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "estrela",
+    "h": 16,
+    "largura": 16,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "estrela",
+    "h": 16,
+    "largura": 16,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "denso_teto",
+    "h": 16,
+    "largura": 31,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "denso_teto",
+    "h": 16,
+    "largura": 31,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "denso_teto",
+    "h": 16,
+    "largura": 31,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "denso",
+    "h": 32,
+    "largura": 64,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "denso",
+    "h": 32,
+    "largura": 64,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "denso",
+    "h": 32,
+    "largura": 64,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "estrela",
+    "h": 32,
+    "largura": 32,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "estrela",
+    "h": 32,
+    "largura": 32,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "estrela",
+    "h": 32,
+    "largura": 32,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "denso_teto",
+    "h": 32,
+    "largura": 63,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "denso_teto",
+    "h": 32,
+    "largura": 63,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "denso_teto",
+    "h": 32,
+    "largura": 63,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "denso",
+    "h": 64,
+    "largura": 128,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "denso",
+    "h": 64,
+    "largura": 128,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "denso",
+    "h": 64,
+    "largura": 128,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "estrela",
+    "h": 64,
+    "largura": 64,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "estrela",
+    "h": 64,
+    "largura": 64,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "estrela",
+    "h": 64,
+    "largura": 64,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "denso_teto",
+    "h": 64,
+    "largura": 126,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "denso_teto",
+    "h": 64,
+    "largura": 126,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "denso_teto",
+    "h": 64,
+    "largura": 126,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "denso",
+    "h": 128,
+    "largura": 256,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "denso",
+    "h": 128,
+    "largura": 256,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "denso",
+    "h": 128,
+    "largura": 256,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "estrela",
+    "h": 128,
+    "largura": 128,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "estrela",
+    "h": 128,
+    "largura": 128,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "estrela",
+    "h": 128,
+    "largura": 128,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "denso_teto",
+    "h": 128,
+    "largura": 253,
+    "semente": 0,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "denso_teto",
+    "h": 128,
+    "largura": 253,
+    "semente": 1,
+    "epocas": 100,
+    "taxa": 0.01
+  },
+  {
+    "bloco": "categorico",
+    "familia": "denso_teto",
+    "h": 128,
+    "largura": 253,
+    "semente": 2,
+    "epocas": 100,
+    "taxa": 0.01
+  }
+]

@@ -1,0 +1,67 @@
+{
+  "registrado_em": "2026-10-22T19:05:55.152471-03:00",
+  "tipo": "reorganizacao_editorial",
+  "raiz_original": "research",
+  "raiz_atual": "pesquisa",
+  "checkpoint_original_sha256": "164014a044f734e14e7dc1c5c7e72f5ab44ef8662da6a1180efce6cf5fab3ebc",
+  "fontes_alteradas": {
+    "research/benchmark.py": {
+      "sha256_anterior": "ff5692678f12ea6161bdf40a4749c6a4005b760f6a9005fc15778f423b3a8a28",
+      "sha256_atual": "7c140b03f027db479193ecac2708da2cfe8405500cf42bca31b2b22c9607b00a",
+      "caminho_atual": "pesquisa/benchmark.py"
+    },
+    "research/__init__.py": {
+      "sha256_anterior": "eb0097683d81902e42b57ff28cf1315c492e34b540857177c314fd1ff8c4c49f",
+      "sha256_atual": "336147c974d66f9357411b9742b82cea31a21a2c15a819a8edd2f0108c3c0192",
+      "caminho_atual": "pesquisa/__init__.py"
+    },
+    "research/q05_estudo/README.md": {
+      "sha256_anterior": "2c7da34c636106568938bbea79ba399037929f74ee9bc7c382685c5f2adf17a1",
+      "sha256_atual": "0a6dd49e6efa8dab3855743e637d329d545d240e6fed17f00210794fb1ff83a9",
+      "caminho_atual": "pesquisa/q05_estudo/README.md"
+    },
+    "research/q05_estudo/analisar.py": {
+      "sha256_anterior": "ad5d92cda872c8047bfd5dd1f4fe31aaea634db3cd1a388f83afe62d6b91f9a8",
+      "sha256_atual": "7a042bc0319837b544a37d4c2066176a031d478b55ae5fb3aabd3769ecbc7065",
+      "caminho_atual": "pesquisa/q05_estudo/analisar.py"
+    },
+    "research/q05_estudo/atualizar_checkpoint.py": {
+      "sha256_anterior": "8a437a8d5a6e76d9687bff5d5b899297adf08d211313e566c7df6dde2b06fb49",
+      "sha256_atual": "866a5098b13fd2fef04ee6b87cf2b7c420f0ad550fea1a5b9646ad21cb78b937",
+      "caminho_atual": "pesquisa/q05_estudo/atualizar_checkpoint.py"
+    },
+    "research/q05_estudo/diagnosticar_grafos.py": {
+      "sha256_anterior": "a5c8fd094bddf66301cba67a08c93c6b3c73193a1c68ccf43be5a54347c1bc79",
+      "sha256_atual": "6ab959487ebc2310edd669f4d40afbc6b1d322fe791aa51bab8a50d758b24a2d",
+      "caminho_atual": "pesquisa/q05_estudo/diagnosticar_grafos.py"
+    },
+    "research/q05_estudo/executar_seguro.py": {
+      "sha256_anterior": "f0780bacf3d230de20c2acbb5df1ea9e44634cfdb76a2f2050320e6c6f6d2d2d",
+      "sha256_atual": "731999d7e61b244f36428fd5c7526073e7e6f8da1820fae4ac8090f0c5851adb",
+      "caminho_atual": "pesquisa/q05_estudo/executar_seguro.py"
+    },
+    "research/q05_estudo/gerar_relatorio.py": {
+      "sha256_anterior": "1f3512578a5c8c4a24a6301ef86edcfc0262d90728cc4c29cd95ec9930a43cfc",
+      "sha256_atual": "1814a5aaf89d38a61805ef980faf24b5627552f1193dc5bdc29c9beb09927114",
+      "caminho_atual": "pesquisa/q05_estudo/gerar_relatorio.py"
+    },
+    "research/q05_estudo/relatorio.md": {
+      "sha256_anterior": "90adb8f6d57d68d1a3cb92a227e992acdb50ede507c1d1632caf26f01e6c78c4",
+      "sha256_atual": "79863a8580709a75d0d9cb61a68c965b894d8afa44b9d2160733d4a04decebc3",
+      "caminho_atual": "pesquisa/q05_estudo/relatorio.md"
+    },
+    "research/q05_estudo/test_modelos.py": {
+      "sha256_anterior": "355fc55c62cad359ea62ba98c1109479fc064c7143583bba9b6bb0757e146455",
+      "sha256_atual": "7620382aad0c21eca763aa9d594eda2439bb4bf0bb0dcacf806f2ce894cef45b",
+      "caminho_atual": "pesquisa/q05_estudo/test_modelos.py"
+    },
+    "research/q05_estudo/verificar_resultados.py": {
+      "sha256_anterior": "466e34bc78a1e5c0aca123c79e8e4502974f83116c356c0b660eeb0139029e6a",
+      "sha256_atual": "f7f75aceb348ead4aa921354197f581b0393ee4093175e30ed6e2f3c8e282977",
+      "caminho_atual": "pesquisa/q05_estudo/verificar_resultados.py"
+    }
+  },
+  "alteracoes": "Nome do pacote, imports, comandos de reprodução, documentação e validação explícita da proveniência. Fórmulas, dados, treinamento e resultados preservados.",
+  "novos_treinamentos": 0,
+  "manifestos_historicos_preservados": true
+}

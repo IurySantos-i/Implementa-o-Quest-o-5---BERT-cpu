@@ -1,0 +1,48 @@
+Referência reproduzida: acurácia=0.85430870; treino=84,227,782,200 FLOPs
+Grade: 156 execuções; pendentes: 156
+Traceback (most recent call last):
+  File "/home/iurygds/Documents/BERT-cpu/research/q05_estudo/executar.py", line 153, in <module>
+    main()
+    ~~~~^^
+  File "/home/iurygds/Documents/BERT-cpu/research/q05_estudo/executar.py", line 141, in main
+    futuros = [executor.submit(executar_uma, c) for c in pendentes]
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/concurrent/futures/process.py", line 914, in submit
+    self._adjust_process_count()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/concurrent/futures/process.py", line 878, in _adjust_process_count
+    self._spawn_process()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/concurrent/futures/process.py", line 889, in _spawn_process
+    _spawn_worker(self._mp_context, self._call_queue,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  self._result_queue, self._initializer,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  self._initargs, self._max_tasks_per_child,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  self._processes)
+                  ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/concurrent/futures/process.py", line 282, in _spawn_worker
+    p.start()
+    ~~~~~~~^^
+  File "/usr/lib/python3.14/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+                  ~~~~~~~~~~~^^^^^^
+  File "/usr/lib/python3.14/multiprocessing/context.py", line 306, in _Popen
+    return Popen(process_obj)
+  File "/usr/lib/python3.14/multiprocessing/popen_forkserver.py", line 35, in __init__
+    super().__init__(process_obj)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/multiprocessing/popen_fork.py", line 20, in __init__
+    self._launch(process_obj)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/multiprocessing/popen_forkserver.py", line 51, in _launch
+    self.sentinel, w = forkserver.connect_to_new_process(self._fds)
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/lib/python3.14/multiprocessing/forkserver.py", line 89, in connect_to_new_process
+    self.ensure_running()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/multiprocessing/forkserver.py", line 167, in ensure_running
+    listener.bind(address)
+    ~~~~~~~~~~~~~^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted

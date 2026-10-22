@@ -1,0 +1,77 @@
+Build Dependencies:
+  blas:
+    detection method: pkgconfig
+    found: true
+    include directory: /usr/include
+    lib directory: /usr/lib
+    name: cblas
+    openblas configuration: unknown
+    pc file directory: /usr/lib/pkgconfig
+    version: 3.12.0
+  lapack:
+    detection method: pkgconfig
+    found: true
+    include directory: /usr/include
+    lib directory: /usr/lib
+    name: lapack
+    openblas configuration: unknown
+    pc file directory: /usr/lib/pkgconfig
+    version: 3.12.0
+Compilers:
+  c:
+    args: -march=x86-64-v3, -mtune=haswell, -O3, -pipe, -fno-plt, -fexceptions, -Wp,-D_FORTIFY_SOURCE=3,
+      -Wformat, -Werror=format-security, -fstack-clash-protection, -fcf-protection,
+      -mpclmul, -g1, -ffile-prefix-map=/startdir/src=/usr/src/debug/python-numpy,
+      -flto=auto, -ffat-lto-objects
+    commands: cc
+    linker: ld.bfd
+    linker args: -Wl,-O1, -Wl,--sort-common, -Wl,--as-needed, -Wl,-z,relro, -Wl,-z,now,
+      -Wl,-z,pack-relative-relocs, -flto=auto, -march=x86-64-v3, -mtune=haswell, -O3,
+      -pipe, -fno-plt, -fexceptions, -Wp,-D_FORTIFY_SOURCE=3, -Wformat, -Werror=format-security,
+      -fstack-clash-protection, -fcf-protection, -mpclmul, -g1, -ffile-prefix-map=/startdir/src=/usr/src/debug/python-numpy,
+      -flto=auto, -ffat-lto-objects
+    name: gcc
+    version: 16.2.1
+  c++:
+    args: -march=x86-64-v3, -mtune=haswell, -O3, -pipe, -fno-plt, -fexceptions, -Wp,-D_FORTIFY_SOURCE=3,
+      -Wformat, -Werror=format-security, -fstack-clash-protection, -fcf-protection,
+      -mpclmul, -Wp,-D_GLIBCXX_ASSERTIONS, -g1, -ffile-prefix-map=/startdir/src=/usr/src/debug/python-numpy,
+      -flto=auto, -ffat-lto-objects
+    commands: c++
+    linker: ld.bfd
+    linker args: -Wl,-O1, -Wl,--sort-common, -Wl,--as-needed, -Wl,-z,relro, -Wl,-z,now,
+      -Wl,-z,pack-relative-relocs, -flto=auto, -march=x86-64-v3, -mtune=haswell, -O3,
+      -pipe, -fno-plt, -fexceptions, -Wp,-D_FORTIFY_SOURCE=3, -Wformat, -Werror=format-security,
+      -fstack-clash-protection, -fcf-protection, -mpclmul, -Wp,-D_GLIBCXX_ASSERTIONS,
+      -g1, -ffile-prefix-map=/startdir/src=/usr/src/debug/python-numpy, -flto=auto,
+      -ffat-lto-objects
+    name: gcc
+    version: 16.2.1
+  cython:
+    commands: cython
+    linker: cython
+    name: cython
+    version: 3.3.0
+Machine Information:
+  build:
+    cpu: x86_64
+    endian: little
+    family: x86_64
+    system: linux
+  host:
+    cpu: x86_64
+    endian: little
+    family: x86_64
+    system: linux
+Python Information:
+  path: /usr/bin/python
+  version: '3.14'
+SIMD Extensions:
+  baseline:
+  - X86_V2
+  - X86_V3
+  not found:
+  - X86_V4
+  - AVX512_ICL
+  - AVX512_SPR
+
